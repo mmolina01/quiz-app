@@ -11,20 +11,24 @@
 </template>
 
 <script>
-export default {
-	
-	props: {
-		results: Array,
-		totalCorrect: Number
-	},
+	import { computed } from 'vue';
 
-	computed: {
-		computedResult() {
+	export default {
+		
+		props: {
+			results: Array,
+			totalCorrect: Number
+		},
 
-			const r = this.results.find(result => result.min <= this.totalCorrect && result.max >= this.totalCorrect);
-			return r ? r : this.result[0];
+		setup(props) {
+			const computedResult = computed(() => {
+
+				const r = props.results.find(result => result.min <= props.totalCorrect && result.max >= props.totalCorrect);
+				return r ? r : props.result[0];
+			});
+
+			return {computedResult};
 		}
-	}
-	
-}
+
+	};
 </script>
